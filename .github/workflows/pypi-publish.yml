@@ -28,23 +28,3 @@ jobs:
     - name: Start testing with pytest on Python ${{ matrix.pythonvers }}
       run:
         pytest  
-
-  build-publish:
-    needs: test
-
-    if: ${{ github.event_name == 'push' }}
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Install dependencies
-      run:
-        pip install build
-    - name: Build package
-      run: python -m build
-    - name: Publish package
-      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
